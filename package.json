@@ -6,9 +6,9 @@
   "scripts": {
     "test": "mocha",
     "dev": "node server.js",
-    "build": "next build",
-    "start": "next start -p $PORT",
-    "heroku-postbuild": "npm run build"
+    "build": "./node_modules/next/dist/bin/next build",
+    "heroku-postbuild": "./node_modules/next/dist/bin/next build",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
