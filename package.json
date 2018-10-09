@@ -31,5 +31,10 @@
     "truffle-hdwallet-provider": "0.0.3",
     "video-react": "^0.13.0",
     "web3": "^1.0.0-beta.36"
+  },
+  "next": {
+    "routes": {
+      "/campaigns/:address" : "/campaigns/show"
+    }
   }
 }
