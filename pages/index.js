@@ -6,6 +6,7 @@ import Layout from '../components/Layout';
 import { Link } from '../routes';
 import TabCategory from '../components/Home/TabCategory';
 import userFactory from '../ethereum/user';
+import { Router } from '../routes';
 
 class CampaignIndex extends Component {
     // static async getInitialProps() {
@@ -30,31 +31,31 @@ class CampaignIndex extends Component {
     // }
 
     state = {
-        totalBackers : '',
-        totalCampaigns : '',
-        funded : '',
-        lived : ''
+        totalBackers: '',
+        totalCampaigns: '',
+        funded: '',
+        lived: ''
     }
 
     async componentDidMount() {
         let totalBackers = await userFactory.methods.getTotalBackers().call()
         let totalCampaigns = await factory.methods.campaignsCount().call()
-        
+
         let funded = 0
 
         await Promise.all(
-            Array(parseInt(totalCampaigns)).fill().map( async(element, index) => {
+            Array(parseInt(totalCampaigns)).fill().map(async (element, index) => {
                 let address = await factory.methods.campaignsAddress(index).call()
                 let campaign = Campaign(address)
                 let isFunded = await campaign.methods.isFunded().call()
                 if (isFunded == true) {
                     funded++
-                } 
+                }
             })
         );
 
         let lived = totalCampaigns - funded
-        this.setState({totalBackers, totalCampaigns, funded, lived})
+        this.setState({ totalBackers, totalCampaigns, funded, lived })
     }
 
     render() {
@@ -74,14 +75,20 @@ class CampaignIndex extends Component {
                             </Grid.Column>
 
                             <Grid.Column width={4}>
-                                <List>
-                                    <List.Item>
-                                        TOTAL BACKERS
-                                    </List.Item>
-                                    <List.Item>
-                                        {this.state.totalBackers}
-                                    </List.Item>
-                                </List>
+                                <Link route={`/users/users`}>
+                                    <List>
+                                        <List.Item>
+                                            <a> TOTAL BACKERS</a>
+                                        </List.Item>
+                                        <List.Item>
+                                            <a>{this.state.totalBackers}</a>
+                                        </List.Item>
+                                    </List>
+
+
+                                </Link>
+
+
                             </Grid.Column>
 
                             <Grid.Column width={4}>

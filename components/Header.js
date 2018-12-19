@@ -5,7 +5,7 @@ import { Router } from '../routes';
 
 const options = [
     { key: 'logout', text: 'Logout', value: 'logout' },
-    { key: 'profile', text: 'Profile', value: 'profile' },
+    // { key: 'profile', text: 'Profile', value: 'profile' },
 ]
 
 class HeaderComponent extends Component {
@@ -59,7 +59,7 @@ class HeaderComponent extends Component {
                     <Grid.Column width={10} style={{ textAlign: 'center' }}>
                         <Link route="/">
                             <Header as='h2' color='teal' textAlign='center'>
-                                KICKSTARER
+                                KICKSTARTER
                             </Header>
                         </Link>
                     </Grid.Column>

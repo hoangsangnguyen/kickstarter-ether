@@ -35,5 +35,5 @@ const deployUsers = async () => {
 
 };
 
-deploy();
-// deployUsers();
+//deploy();
+deployUsers();

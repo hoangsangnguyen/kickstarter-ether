@@ -10,7 +10,7 @@ routes
     .add('/fileupload/:filename', '/fileupload')
     .add('/author/login', '/author/login')
     .add('/author/signup', '/author/signup')
-    
+    .add('/users', '/users/users')
     
     ;
 

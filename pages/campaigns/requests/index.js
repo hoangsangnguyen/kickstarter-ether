@@ -28,19 +28,21 @@ class RequestIndex extends Component {
         const address = this.props.url.query.address
         const campaign = Campaign(address)
         
-      
-        let requestCount = await campaign.methods.getRequestsCount().call({
-            from : user.walletAddress
-        });
+        let requestCount = await campaign.methods.getRequestsCount().call();
+
+        console.log('After get request count')
 
         const approversCount = await campaign.methods.mInvestorsCount().call();
 
-        
+        console.log('Before get requests')
+
         const requests = await Promise.all(
             Array(parseInt(requestCount)).fill().map((element, index) => {
                 return campaign.methods.mRequests(index).call()
             })
         );
+
+        console.log('After get requests')
 
         let manager = await campaign.methods.mManager().call();
         this.setState({address, requests, requestCount, approversCount, manager})

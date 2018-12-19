@@ -48,6 +48,10 @@ class SignUp extends Component {
         this.setState({ loading: false })
     }
 
+    handRedirectLoginClick() {
+        Router.pushRoute('/author/login')
+    }
+
     render() {
         return (
             <Container>
@@ -112,7 +116,7 @@ class SignUp extends Component {
                                 </Segment>
                             </Form>
                             <Message>
-                                Back to login ? <a href='/author/login'>Login</a>
+                                Back to login ? <a onClick={this.handRedirectLoginClick}>Login</a>
                             </Message>
                         </Grid.Column>
                     </Grid>

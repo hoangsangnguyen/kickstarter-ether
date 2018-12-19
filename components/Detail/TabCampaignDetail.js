@@ -7,8 +7,6 @@ class TabCampaignDetail extends Component {
     };
    
     render() {
-        console.log('Value : ', this.props.info)
-
         return (
             <Container style={{ marginTop: '29px', marginBottom : '50px' }}>
                 {this.props.info}

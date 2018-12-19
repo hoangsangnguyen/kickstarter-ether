@@ -4,6 +4,7 @@ import { Link } from '../../routes';
 import factory from '../../ethereum/factory';
 import Campaign from '../../ethereum/campaign';
 import web3 from '../../ethereum/web3';
+import { Router } from '../../routes';
 
 class TabCategoryDetail extends Component {
     state = {
@@ -12,20 +13,15 @@ class TabCategoryDetail extends Component {
 
     async componentWillReceiveProps(nextProps) {
         if (this.props.campaigns !== nextProps.campaigns) {
-            console.log(this.props !== nextProps)
-
             let campaigns = await nextProps.campaigns.campaigns.map(async (address, i) => {
                 const campaign = Campaign(address);
-                let title = await campaign.methods.mTitle().call();
-                let imageUrl = await campaign.methods.mImageFile().call();
-                let backed = await campaign.methods.mBacked().call();
-                let goal = await campaign.methods.mGoal().call();
+                let info = await campaign.methods.getDetailCampaignInfo().call();
                 return {
-                    title: title,
-                    imageUrl: imageUrl,
+                    title: info.title,
+                    imageUrl: info.imageUrl,
                     address: address,
-                    backed : web3.utils.fromWei(backed, 'ether'),
-                    goal : web3.utils.fromWei(goal, 'ether'),
+                    backed : web3.utils.fromWei(info.backed, 'ether'),
+                    goal : web3.utils.fromWei(info.goal, 'ether'),
                 }
             });
 
@@ -36,10 +32,6 @@ class TabCategoryDetail extends Component {
 
     }
 
-    handleClick = (e) => {
-        console.log('Click ', e)
-    }
-
     renderCampaigns() {
         let items = []
         this.state.campaigns.map((campaign, i) => {
@@ -47,7 +39,7 @@ class TabCategoryDetail extends Component {
                 image: { src: campaign.imageUrl, width: '100%', height: '200px' },
                 header: campaign.title,
                 extra : `Backed:  ${campaign.backed} / ${campaign.goal}`,
-                href : `/campaigns/${campaign.address}`
+                onClick : ()=>{Router.pushRoute(`/campaigns/${campaign.address}`)},
             })
         });
 
@@ -57,6 +49,7 @@ class TabCategoryDetail extends Component {
     
 
     render() {
+        console.log('Render detail')
         return (
             <Container style={{ marginTop: '29px' }}>
                 {this.renderCampaigns()}

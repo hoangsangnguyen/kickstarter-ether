@@ -6,7 +6,7 @@ import Campaign from '../../ethereum/campaign'
 const panes = (description, investmentIntroduction, address) => [
     { menuItem: 'Description', value: 'description' , render: () => <TabCampaignDetail  info = {description}></TabCampaignDetail> },
     { menuItem: 'Invesment Introduction',value:'investment-introduction'  , render: () => <TabCampaignDetail  info = {investmentIntroduction}></TabCampaignDetail> },
-    { menuItem: 'Q & A', value: 'q&a' , render: () => <TabCampaignDetail  info = {address}></TabCampaignDetail> },
+    // { menuItem: 'Q & A', value: 'q&a' , render: () => <TabCampaignDetail  info = {address}></TabCampaignDetail> },
 ];
 
 class TabCampaign extends Component {

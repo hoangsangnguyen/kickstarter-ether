@@ -260,7 +260,7 @@ class CampaignNew extends Component {
                     <Form.Field required>
                         <label>Goal</label>
                         <Input
-                            label="wei"
+                            label="eth"
                             labelPosition="right"
                             value={this.state.goal}
                             onChange={event =>
