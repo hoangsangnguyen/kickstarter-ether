@@ -101,7 +101,6 @@ contract Campaign {
         mapping(address => bool) approvals;
     }
     
-  
     address public mManager;
     string public mTitle;
     string public mDescription;
@@ -118,6 +117,7 @@ contract Campaign {
     
     mapping(address => uint) public mInvestors;
     uint public mInvestorsCount;
+    address[] public mInvestorAddress;
     
     modifier restricted(){
         require(msg.sender == mManager);
@@ -150,6 +150,7 @@ contract Campaign {
         } else {
             mInvestors[msg.sender] = msg.value;
             mInvestorsCount++;
+            mInvestorAddress.push(msg.sender);
         }
 
         mBacked += msg.value;
@@ -197,7 +198,7 @@ contract Campaign {
         mRest -= request.value;
     }
 
-    function getCampaignInfo() constant public returns (address manager,
+    function getDetailCampaignInfo() constant public returns (address manager,
                                 string title, string description,
                                 string videoFile, uint minimumContribution,
                                 uint goal, string investmentDescription, uint backed, uint rest,
@@ -216,7 +217,7 @@ contract Campaign {
         );
     }
 
-    function getDetailCampaignInfo() constant public returns (string title, string imageUrl, uint backed, uint goal, uint rest) {
+    function getCampaignInfo() constant public returns (string title, string imageUrl, uint backed, uint goal, uint rest) {
         return (
             mTitle,
             mImageFile,
@@ -226,6 +227,14 @@ contract Campaign {
         );
     }
     
+    function getInvestorsAddress() constant public returns(address[]) {
+        return mInvestorAddress;
+    }
+
+    function getInvestorAmount(address investorAddress) constant public returns(uint amount) {
+        return mInvestors[investorAddress];
+    }
+
     function getRequestsCount() constant public returns(uint requestCount) {
         return mRequests.length;
     }

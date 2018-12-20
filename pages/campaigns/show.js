@@ -12,8 +12,8 @@ import { Link, Router } from '../../routes';
 class CampaignShow extends Component {
     state = {
         manager: '',
-        managerEmail : '',
-        managerName : '',
+        managerEmail: '',
+        managerName: '',
         title: '',
         description: '',
         videoUrl: '',
@@ -23,25 +23,25 @@ class CampaignShow extends Component {
         campaign: '',
         address: '',
         backed: '',
-        rest : '',
+        rest: '',
         investorCount: '',
         userWalletAddress: '',
-        isBacker : false,
-        isManager : false,
-        
+        isBacker: false,
+        isManager: false,
+
     }
 
     async componentDidMount() {
         const campaign = Campaign(this.props.url.query.address)
-        const info = await campaign.methods.getCampaignInfo().call();
+        const info = await campaign.methods.getDetailCampaignInfo().call();
         const managerInfo = await userFactory.methods.getUsernameByWalletAddress(info['manager']).call();
-        
+
         const user = JSON.parse(localStorage.getItem("user"))
-        
+
         if (user != null) {
             let isManager = info['manager'] == user.walletAddress;
             let isBacker = await campaign.methods.mInvestors(user.walletAddress).call();
-            this.setState({userWalletAddress : user.walletAddress, isBacker : isBacker != 0, isManager : isManager})
+            this.setState({ userWalletAddress: user.walletAddress, isBacker: isBacker != 0, isManager: isManager })
         }
 
         const videoId = this.YouTubeGetID(info['videoFile']);
@@ -57,7 +57,7 @@ class CampaignShow extends Component {
             minimumContribution: info['minimumContribution'],
             goal: web3.utils.fromWei(info['goal'], 'ether'),
             backed: web3.utils.fromWei(info['backed'], 'ether'),
-            rest :  web3.utils.fromWei(info['rest'], 'ether'),
+            rest: web3.utils.fromWei(info['rest'], 'ether'),
             investorCount: info['investorCount']
         })
 
@@ -79,7 +79,7 @@ class CampaignShow extends Component {
     render() {
         console.log('Manager : ', this.state.manager)
         console.log('Manager email : ', this.state.managerEmail)
-        console.log('Manager name: ', this.state.managerName)        
+        console.log('Manager name: ', this.state.managerName)
         console.log('description : ', this.state.description)
         console.log('title : ', this.state.title)
         console.log('videoUrl : ', this.state.videoUrl)
@@ -87,16 +87,16 @@ class CampaignShow extends Component {
         console.log('Goal : ', this.state.goal)
         console.log('Backed : ', this.state.backed)
         console.log('Backer : ', this.state.isBacker)
-        console.log('Rest : ', this.state.rest)        
-        console.log('Is Manager : ', this.state.isManager)                
+        console.log('Rest : ', this.state.rest)
+        console.log('Is Manager : ', this.state.isManager)
         console.log('Investor Count : ', this.state.investorCount)
 
         return (
             <Layout>
                 <h3>{this.state.title}</h3>
                 <div style={{ marginTop: '10px', 'font-size': '15px' }}>Owner by: {this.state.managerName}</div>
-                <br/>
-                <br/>
+                <br />
+                <br />
                 <Grid>
                     <Grid.Row>
                         <Grid.Column width={12}>
@@ -117,8 +117,12 @@ class CampaignShow extends Component {
                                 <div style={{ color: 'green', 'font-size': '30px' }}>{this.state.backed} Eth</div>
                                 <div style={{ marginTop: '10px' }}>pledged of {this.state.goal} Eth goal</div>
                                 <br />
-                                <div style={{ color: 'black', 'font-size': '30px' }}>{this.state.investorCount}</div>
-                                <div style={{ marginTop: '10px' }}>backers</div>
+                                <Link route={`/campaigns/${this.props.url.query.address}/investors`}>
+                                    <div>
+                                        <div style={{ color: 'black', 'font-size': '30px' }}>{this.state.investorCount}</div>
+                                        <div style={{ marginTop: '10px' }}>backers</div>
+                                    </div>
+                                </Link>
                                 <br />
                                 <div style={{ color: 'black', 'font-size': '30px' }}>{this.state.rest}</div>
                                 <div style={{ marginTop: '10px' }}>Rest Amount</div>
@@ -138,13 +142,13 @@ class CampaignShow extends Component {
 
                                 <br />
                                 <br />
-                            
+
                                 {(this.state.isBacker || this.state.isManager) ? <Link route={`/campaigns/${this.props.url.query.address}/requests`}>
                                     <a>
                                         <Button color='yellow'>Request</Button>
                                     </a>
                                 </Link> : null}
-                                
+
 
                             </div>
                         </Grid.Column>

@@ -15,7 +15,7 @@ class TabCategoryDetail extends Component {
         if (this.props.campaigns !== nextProps.campaigns) {
             let campaigns = await nextProps.campaigns.campaigns.map(async (address, i) => {
                 const campaign = Campaign(address);
-                let info = await campaign.methods.getDetailCampaignInfo().call();
+                let info = await campaign.methods.getCampaignInfo().call();
                 return {
                     title: info.title,
                     imageUrl: info.imageUrl,
