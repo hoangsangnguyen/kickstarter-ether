@@ -68,6 +68,12 @@ class RequestIndex extends Component {
 
         return (
             <Layout>
+                 <Link route={`/campaigns/${this.props.url.query.address}`}>
+                    <a>
+                        <Button basic content='Return' icon='left arrow' labelPosition='left' />
+                    </a>
+                </Link>
+                
                 <h3>Request List</h3>
                 {isManager ? <Link route={`/campaigns/${this.props.url.query.address}/requests/new`}>
                     <a>

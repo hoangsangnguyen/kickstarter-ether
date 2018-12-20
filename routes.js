@@ -12,6 +12,7 @@ routes
     .add('/author/login', '/author/login')
     .add('/author/signup', '/author/signup')
     .add('/users', '/users/users')
+    .add('/users/:address/investedcampaigns', '/users/investedCampaigns')
     
     ;
 

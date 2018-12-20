@@ -4,7 +4,7 @@ import { Player } from 'video-react';
 import Layout from '../../components/Layout';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
-import { Router } from '../../routes';
+import { Router, Link } from '../../routes';
 import { Common } from '../../utils/common';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
@@ -169,7 +169,7 @@ class CampaignNew extends Component {
     }
 
     render() {
-       
+
         // console.log('image file : ', this.state.imagePreviewUrl);
         // console.log('video file : ', this.state.videoPreviewUrl);
 
@@ -212,6 +212,12 @@ class CampaignNew extends Component {
 
         return (
             <Layout>
+                <Link route={'/'}>
+                    <a>
+                        <Button basic content='Return' icon='left arrow' labelPosition='left' />
+                    </a>
+                </Link>
+
                 <h5>Create new campaign</h5>
 
                 <Form className="segment" onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
@@ -223,7 +229,7 @@ class CampaignNew extends Component {
                             options={this.categories}
                             onChange={(event, { value }) =>
                                 this.setState({ category: value })}
-                            />
+                        />
                     </Form.Field>
 
                     <Form.Field required>

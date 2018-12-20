@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Image, Grid, Card, Icon, List, Table } from 'semantic-ui-react';
+import { Container, Image, Grid, Card, Icon, List, Table, Button } from 'semantic-ui-react';
 import { Link } from '../../routes';
 import Layout from '../../components/Layout';
 import userFactory from '../../ethereum/user';
@@ -42,6 +42,13 @@ class User extends Component {
 
         return (
             <Layout>
+
+                <Link route={'/'}>
+                    <a>
+                        <Button basic content='Return' icon='left arrow' labelPosition='left' />
+                    </a>
+                </Link>
+
                 <h3>Users List</h3>
                 
                 <Table>

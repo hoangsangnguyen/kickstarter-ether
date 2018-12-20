@@ -8,7 +8,7 @@ import { Router } from '../../routes';
 class SignUp extends Component {
     state = {
         errorMessage: '',
-        loading: '',
+        loading: false,
         email: '',
         userName: '',
         password: '',
