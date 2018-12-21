@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Table, Button} from 'semantic-ui-react';
 import web3 from '../ethereum/web3';
 import Campaign from '../ethereum/campaign';
-
+import factory from '../ethereum/factory';
 
 class RequestRow extends Component {
     onApprove = async () => {
@@ -27,7 +27,11 @@ class RequestRow extends Component {
         }
 
         const campaign = Campaign(this.props.address);
-        await campaign.methods.finalizeRequest(this.props.id).send({
+        const admin = await factory.methods.getAdminAddress().call();
+        console.log('Admin : ', admin);
+        console.log('Id : ', this.props.id);
+        
+        await campaign.methods.finalizeRequest(this.props.id, admin).send({
             from : user.walletAddress
         });
     };

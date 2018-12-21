@@ -75,6 +75,7 @@ contract CampaignFactory {
     mapping(string => address[]) deployedCampaigns;
     uint public campaignsCount;
     address[] public campaignsAddress;
+    address constant admin = 0x11BA8368622D242C4cc11e615591F69e9e03EB16;
 
     function createCampaign(string title, string category, uint minimum, string description, string imageFile, string videoFile,
         uint goal, string investmentDescription) public {
@@ -86,6 +87,10 @@ contract CampaignFactory {
     
     function getDeployedCampaign(string category) public view returns (address[]) {
         return deployedCampaigns[category];
+    }
+
+    function getAdminAddress() public view returns (address) {
+        return admin;
     }
 
 }
@@ -186,14 +191,16 @@ contract Campaign {
         
     }
     
-    function finalizeRequest(uint index) public payable restricted {
+    function finalizeRequest(uint index, address admin) public payable restricted {
         Request storage request = mRequests[index];
-        
-        require(mRest >= request.value);
+        require(mBacked >= mGoal);
+        require(mRest >= (request.value * 110 / 100));        
         require(request.approvalCount > (mInvestorsCount/2));
         require(!request.complete);
         
         request.recipient.transfer(request.value);
+        admin.transfer(request.value * 10 / 100);
+
         request.complete = true;
         mRest -= request.value;
     }

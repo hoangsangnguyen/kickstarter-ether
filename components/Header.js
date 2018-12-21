@@ -4,7 +4,9 @@ import { Link } from '../routes';
 import { Router } from '../routes';
 
 let options = [
-    { key: 'logout', text: 'Logout', value: 'logout' },
+    { key: 'myproject', text: 'My projects', value: 'myproject' },
+    { key: 'invested', text: 'My invested campaigns', value: 'invested' },
+    { key: 'logout', text: 'Logout', value: 'logout' }
 ]
 
 class HeaderComponent extends Component {
@@ -34,6 +36,13 @@ class HeaderComponent extends Component {
                         localStorage.clear()
                         Router.pushRoute('/author/login')
                     }
+                    if (value == 'invested') {
+                        Router.pushRoute(`/users/${this.state.userWalletAddress}/investedcampaigns`)
+                    }
+
+                    if (value == 'myproject') {
+                        Router.pushRoute(`/users/${this.state.userWalletAddress}/mycampaigns`)
+                    }
                 }} />
         )
 
@@ -45,22 +54,16 @@ class HeaderComponent extends Component {
         return (
             <Container>
                 <Grid relaxed style={{ marginTop: '10px' }}>
-                    <Grid.Column width={5}>
+                    <Grid.Column width={3}>
                         {isLogin ? <Link route="/campaigns/new">
                             <a className="item" style={{ marginLeft: '20px' }} >Start a project</a>
                         </Link> : <Link route="/author/login">
                             <a className="item" style={{ marginLeft: '20px' }} >Start a project</a>
                         </Link>}
                         
-                        {isLogin ? <Link route={`/users/${this.state.userWalletAddress}/investedcampaigns`}>
-                            <a className="item" style={{ marginLeft: '20px' }} >My invested campaigns</a>
-                        </Link> : <Link route="/author/login">
-                            <a className="item" style={{ marginLeft: '20px' }} >My invested campaigns</a>
-                        </Link>}
-
                     </Grid.Column>
 
-                    <Grid.Column width={8} style={{ textAlign: 'center' }}>
+                    <Grid.Column width={10} style={{ textAlign: 'center' }}>
                         <Link route="/">
                             <Header as='h2' color='teal' textAlign='center'>
                                 KICKSTARTER

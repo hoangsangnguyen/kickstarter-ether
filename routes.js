@@ -13,6 +13,7 @@ routes
     .add('/author/signup', '/author/signup')
     .add('/users', '/users/users')
     .add('/users/:address/investedcampaigns', '/users/investedCampaigns')
+    .add('/users/:address/mycampaigns', '/users/myCampaigns')
     
     ;
 
