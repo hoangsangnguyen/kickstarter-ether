@@ -13,6 +13,7 @@ class BackCampaign extends Component {
         loading: false,
         errorMessage: '',
         title  : '',
+        mMinimumContribution: ''
     }
 
     async componentDidMount() {
@@ -21,7 +22,9 @@ class BackCampaign extends Component {
 
         const campaign = Campaign(this.props.url.query.address)
         const title = await campaign.methods.mTitle().call();
-        this.setState({title})
+        const mMinimumContribution = await campaign.methods.mMinimumContribution().call();
+        console.log('mMinimumContribution : ', mMinimumContribution)
+        this.setState({title : title, mMinimumContribution : web3.utils.fromWei(mMinimumContribution, 'ether')})
 
     }
 
@@ -39,7 +42,6 @@ class BackCampaign extends Component {
             console.log("User walletAdress : ", userWalletAddress)
 
             const campaign = Campaign(this.props.url.query.address)
-
             console.log('campaign : ' + campaign);
             console.log('Amount back : ', this.state.amount)
 
@@ -96,7 +98,8 @@ class BackCampaign extends Component {
                     </Form.Field>
 
                     <Message error header="Oops!" content={this.state.errorMessage} />
-
+                    
+                    <p>Minmum amount > {this.state.mMinimumContribution} eth.</p>
                     <Button primary loading={this.state.loading}>Back to this campaign</Button>
                 </Form>
             </Layout>
